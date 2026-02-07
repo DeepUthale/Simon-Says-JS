@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simon Neon — Memory Reflex</title>
+  <meta name="description" content="A modern Simon Says game with sound, strict mode, speed settings, keyboard controls, and high score." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">S</div>
+        <div>
+          <h1>Simon Neon</h1>
+          <p class="sub">Memorize the pattern. Repeat it. Level up.</p>
+        </div>
+      </div>
+
+      <div class="stats" role="status" aria-live="polite">
+        <div class="stat">
+          <span class="k">Level</span>
+          <span class="v" id="levelValue">0</span>
+        </div>
+        <div class="stat">
+          <span class="k">Best</span>
+          <span class="v" id="bestValue">0</span>
+        </div>
+        <div class="stat">
+          <span class="k">Streak</span>
+          <span class="v" id="streakValue">0</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div id="controls">
+        <div class="control-group left">
+          <button class="btn-ui primary" id="startBtn" type="button">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="startBtnLabel">Start</span>
+          </button>
+          <button class="btn-ui" id="pauseBtn" type="button" disabled>Pause</button>
+          <button class="btn-ui" id="restartBtn" type="button" disabled>Restart</button>
+        </div>
+        
+        <div class="control-group right">
+          <label class="select">
+            <span class="lbl">Speed</span>
+            <select id="speedSelect" aria-label="Speed">
+              <option value="easy" class="diff">Easy</option>
+              <option value="normal" selected class="diff">Normal</option>
+              <option value="hard" class="diff">Hard</option>
+              <option value="insane" class="diff">Insane</option>
+            </select>
+          </label>
+
+          <label class="toggle">
+            <input id="strictToggle" type="checkbox" />
+            <span class="pill" aria-hidden="true"></span>
+            <span class="lbl">Strict</span>
+          </label>
+
+          <label class="toggle">
+            <input id="soundToggle" type="checkbox" checked />
+            <span class="pill" aria-hidden="true"></span>
+            <span class="lbl">Sound</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="message" id="message" role="status" aria-live="polite">
+        Press <kbd>Start</kbd> or hit <kbd>Enter</kbd>. Use <kbd>1–4</kbd> to play.
+      </div>
+
+      <div class="board" role="application" aria-label="Simon board">
+        <button class="pad pad--red"    data-color="red"    data-key="1" aria-label="Red (1)"></button>
+        <button class="pad pad--yellow" data-color="yellow" data-key="2" aria-label="Yellow (2)"></button>
+        <button class="pad pad--green"  data-color="green"  data-key="3" aria-label="Green (3)"></button>
+        <button class="pad pad--blue"   data-color="blue"   data-key="4" aria-label="Blue (4)"></button>
+
+        <div class="center">
+          <div class="center__ring" aria-hidden="true"></div>
+          <div class="center__content">
+            <div class="chip">
+              <span class="chip__title">Input</span>
+              <span class="chip__value" id="inputValue">0 / 0</span>
+            </div>
+
+            <div class="mini">
+              <button class="btn-ui tiny" id="hintBtn" type="button" disabled title="Replay current sequence once (costs streak)">
+                Hint
+              </button>
+              <button class="btn-ui tiny" id="howBtn" type="button">How to play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="keys">
+          <span class="tag">Keys:</span>
+          <span><kbd>Enter</kbd> Start/Pause</span>
+          <span><kbd>R</kbd> Restart</span>
+          <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> Pads</span>
+        </div>
+        <div class="tiny-note" id="tinyNote">
+          Tip: Strict mode is brutal 😅
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close="true"></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">How to play</h2>
+      <ul>
+        <li>Press <b>Start</b> (or <kbd>Enter</kbd>) to begin.</li>
+        <li>Watch the glowing sequence and listen to the tones.</li>
+        <li>Repeat the sequence using clicks or <kbd>1–4</kbd>.</li>
+        <li>Each level adds one new step.</li>
+        <li><b>Strict mode</b>: one mistake ends the game.</li>
+        <li><b>Hint</b>: replays the sequence once, but costs your streak.</li>
+      </ul>
+      <div class="modal__actions">
+        <button class="btn-ui primary" id="closeModalBtn" type="button">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
